@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://usci.bsbnb.kz/ws/schema" elementFormDefault="qualified" attributeFormDefault="unqualified"
+xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://usci.bsbnb.kz/ws/schema">
+    
+    <xs:element name="responseInfo">  
+	    <xs:complexType> 
+	      <xs:sequence> 
+	        <xs:element name="responseTime" maxOccurs="1" minOccurs="0" type="xs:dateTime" />
+	        <xs:element name="responseCode" maxOccurs="1" minOccurs="0" type="xs:int" />    
+	        <xs:element name="responseText" maxOccurs="1" minOccurs="0" type="xs:string" />      
+	      </xs:sequence> 
+	    </xs:complexType> 
+   	</xs:element>
+	
+	<xs:element name="requestInfo">  
+	    <xs:complexType> 
+	      <xs:sequence> 
+	        <xs:element name="requestId" maxOccurs="1" minOccurs="1" type="xs:string" />
+	        <xs:element name="requestTime" maxOccurs="1" minOccurs="1" type="xs:dateTime" />    
+		  </xs:sequence>
+	    </xs:complexType> 
+   	</xs:element>
+	
+   	<xs:element name="GetAuthTokenRequest">   
+	    <xs:complexType> 
+	      	<xs:sequence> 
+	        	<xs:element ref="tns:requestInfo" />
+				<xs:element name="user" maxOccurs="1" minOccurs="1" type="xs:string" />    
+				<xs:element name="userPass" maxOccurs="1" minOccurs="1" type="xs:string" />
+	     	</xs:sequence> 
+	    </xs:complexType> 
+  	</xs:element> 
+	
+  	<xs:element name="GetAuthTokenResponse">   
+	    <xs:complexType> 
+			<xs:sequence>		
+				<xs:element ref="tns:responseInfo" />
+				<xs:element name="userToken" maxOccurs="1" minOccurs="1" type="xs:string" />   
+			</xs:sequence>
+	    </xs:complexType> 
+  	</xs:element>
+	
+   	<xs:element name="GetUsciEntitiesRequest">   
+	    <xs:complexType> 
+	      	<xs:sequence> 
+	        	<xs:element ref="tns:requestInfo" />
+				<xs:element name="user" maxOccurs="1" minOccurs="1" type="xs:string" />    
+				<xs:element name="userToken" maxOccurs="1" minOccurs="1" type="xs:string" />   
+				<xs:element name="userBin" maxOccurs="1" minOccurs="1" type="xs:string" /> 
+	        	<xs:element ref="tns:manifest" />
+				<xs:element name="data" type="xs:string" maxOccurs="1" minOccurs="0"/>
+	     	</xs:sequence> 
+	    </xs:complexType> 
+  	</xs:element> 
+	
+  	<xs:element name="GetUsciEntitiesResponse">   
+	    <xs:complexType> 
+			<xs:sequence>		
+				<xs:element ref="tns:responseInfo" />
+				<xs:element name="generatedBatchName" maxOccurs="1" minOccurs="0" type="xs:string" /> 
+			</xs:sequence>
+	    </xs:complexType> 
+  	</xs:element> 
+  	
+	<xs:element name="manifest">
+   		<xs:complexType> 
+			<xs:sequence>    
+	    	    <xs:element name="productCode" minOccurs="1" maxOccurs="1" nillable="false">
+		           	<xs:simpleType>
+			           	<xs:restriction base="xs:string">
+			           		<xs:minLength value="1"/>
+			           		<xs:maxLength value="240"/>         		
+			           	</xs:restriction>
+	      	    	</xs:simpleType>
+	      	    </xs:element>	
+				<xs:element name="reportDate" maxOccurs="1" minOccurs="1" type="tns:date" nillable="false"/>
+	    	    <xs:element name="respondentCode" minOccurs="1" maxOccurs="1" nillable="false">
+		           	<xs:simpleType>
+			           	<xs:restriction base="xs:string">
+			           		<xs:minLength value="1"/>
+			           		<xs:maxLength value="240"/>         		
+			           	</xs:restriction>
+	      	    	</xs:simpleType>
+	      	    </xs:element>  	      	    
+		     </xs:sequence> 
+	    </xs:complexType> 
+   	</xs:element>
+   	
+	<xs:simpleType name="date">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9][0-9].[0-9][0-9].[0-9][0-9][0-9][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>	
+</xs:schema>

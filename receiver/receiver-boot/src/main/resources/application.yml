@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: nb-stend
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1300000
+
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 600000
+
+feign:
+  hystrix:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 600000
+
+cluster: 1

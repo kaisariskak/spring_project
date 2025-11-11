@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+		targetNamespace="http://usci.bsbnb.kz/ws/schema"
+		xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		xmlns:tns="http://usci.bsbnb.kz/ws/schema"
+		elementFormDefault="qualified"
+		attributeFormDefault="unqualified">
+
+	<!-- ===== Общие блоки ===== -->
+	<xs:element name="responseInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="responseTime" type="xs:string" minOccurs="0"/>
+				<xs:element name="responseCode" type="xs:int" minOccurs="0"/>
+				<xs:element name="responseText" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="requestInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="requestId" type="xs:string"/>
+				<xs:element name="requestTime" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:simpleType name="date">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9][0-9]\.[0-9][0-9]\.[0-9]{4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ===== Manifest ===== -->
+	<xs:element name="manifest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="productCode" type="xs:string"/>
+				<xs:element name="reportDate" type="xs:string"/>
+				<xs:element name="respondentCode" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== Auth Token ===== -->
+	<xs:element name="AuthTokenRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:requestInfo"/>
+				<xs:element name="user" type="xs:string"/>
+				<xs:element name="userPass" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="AuthTokenResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:responseInfo"/>
+				<xs:element name="userToken" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== USCI Entities ===== -->
+	<xs:element name="UsciEntitiesRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:requestInfo"/>
+				<xs:element name="user" type="xs:string"/>
+				<xs:element name="userToken" type="xs:string"/>
+				<xs:element name="userBin" type="xs:string"/>
+				<xs:element ref="tns:manifest"/>
+				<xs:element name="data" type="xs:string"/>
+				<xs:element name="signature" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="UsciEntitiesResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:responseInfo"/>
+				<xs:element name="generatedBatchName" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== Protocol ===== -->
+	<xs:complexType name="protocol">
+		<xs:sequence>
+			<xs:element name="id" type="xs:long" minOccurs="0"/>
+			<xs:element name="reportDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="receiverDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="processBeginDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="processEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="fileName" type="xs:string" minOccurs="0"/>
+			<xs:element name="status" type="xs:string" minOccurs="0"/>
+			<xs:element name="respondentName" type="xs:string" minOccurs="0"/>
+			<xs:element name="productName" type="xs:string" minOccurs="0"/>
+			<xs:element name="totalEntityCount" type="xs:long" minOccurs="0"/>
+			<xs:element name="actualEntityCount" type="xs:long" minOccurs="0"/>
+			<xs:element name="successEntityCount" type="xs:long" minOccurs="0"/>
+			<xs:element name="errorEntityCount" type="xs:long" minOccurs="0"/>
+			<xs:element name="maintenanceEntityCount" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="protocolList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="protocol" type="tns:protocol" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== Protocol Request/Response ===== -->
+	<xs:element name="ProtocolRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="user" type="xs:string"/>
+				<xs:element name="userToken" type="xs:string"/>
+				<xs:element name="respondentCode" type="xs:string"/>
+				<xs:element name="productCode" type="xs:string"/>
+				<xs:element name="reportDate" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="ProtocolResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:responseInfo"/>
+				<xs:element ref="tns:protocolList"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ====== User Report Info ===== -->
+	<xs:complexType name="userReportInfo">
+		<xs:sequence>
+			<xs:element name="user" type="xs:string"/>
+			<xs:element name="respondent" type="xs:string"/>
+			<xs:element name="product" type="xs:string"/>
+			<xs:element name="tableName" type="xs:string"/>
+			<xs:element name="reportDate" type="xs:date"/>
+			<xs:element name="beginDate" type="xs:dateTime"/>
+			<xs:element name="endDate" type="xs:dateTime"/>
+			<xs:element name="status" type="xs:string"/>
+			<xs:element name="countQueue" type="xs:long"/>
+			<xs:element name="file" type="xs:base64Binary"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ===== Output Form ===== -->
+	<xs:complexType name="outputForm">
+		<xs:sequence>
+			<xs:element name="nameForm" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ===== Report Info ===== -->
+	<xs:element name="ReportInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="user" type="xs:string"/>
+				<xs:element name="userToken" type="xs:string"/>
+				<xs:element name="respondentCode" type="xs:string"/>
+				<xs:element name="productCode" type="xs:string"/>
+				<xs:element name="reportDate" type="xs:string"/>
+				<xs:element name="vitrina" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== User Info Request ===== -->
+	<xs:complexType name="userInfoRequest">
+		<xs:sequence>
+			<xs:element name="user" type="xs:string"/>
+			<xs:element name="userToken" type="xs:string"/>
+			<xs:element name="respondentCode" type="xs:string"/>
+			<xs:element name="productCode" type="xs:string"/>
+			<xs:element name="reportDate" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="UserInfoRequest" type="tns:userInfoRequest"/>
+
+	<!-- ===== Output Form Response ===== -->
+	<xs:element name="OutputFormResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:responseInfo"/>
+				<xs:element name="outputFormList" type="tns:outputForm" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== Run Report Response ===== -->
+	<xs:element name="RunReportResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:responseInfo"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== User Report Response ===== -->
+	<xs:element name="UserReportResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:responseInfo"/>
+				<xs:element name="userReportInfoList" type="tns:userReportInfo" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== Entity Error ===== -->
+	<xs:complexType name="entityError">
+		<xs:sequence>
+			<xs:element name="fileName" type="xs:string"/>
+			<xs:element name="reportDate" type="xs:date"/>
+			<xs:element name="systemDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="errorMessage" type="xs:string"/>
+			<xs:element name="entityText" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ===== Entity Error Response ===== -->
+	<xs:element name="EntityErrorResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:responseInfo"/>
+				<xs:element name="entityErrorList" type="tns:entityError" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== CrossCheck Message ===== -->
+	<xs:complexType name="crossCheckMessageWs">
+		<xs:sequence>
+			<xs:element name="innerValue" type="xs:string"/>
+			<xs:element name="outerValue" type="xs:string"/>
+			<xs:element name="diff" type="xs:string"/>
+			<xs:element name="description" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ===== CrossCheck ===== -->
+	<xs:complexType name="crossCheckWs">
+		<xs:sequence>
+			<xs:element name="dateBegin" type="xs:dateTime"/>
+			<xs:element name="dateEnd" type="xs:dateTime"/>
+			<xs:element name="reportDate" type="xs:date"/>
+			<xs:element name="statusname" type="xs:string"/>
+			<xs:element name="username" type="xs:string"/>
+			<xs:element name="creditorname" type="xs:string"/>
+			<xs:element name="countQueue" type="xs:long"/>
+			<xs:element name="crossCheckMessageWsList" type="tns:crossCheckMessageWs" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ===== CrossCheck Response ===== -->
+	<xs:element name="CrossCheckResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:responseInfo"/>
+				<xs:element name="crossCheckList" type="tns:crossCheckWs" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== ConfirmWs ===== -->
+	<xs:complexType name="ConfirmWs">
+		<xs:sequence>
+			<xs:element name="idConfirm" type="xs:long"/>
+			<xs:element name="respondentName" type="xs:string"/>
+			<xs:element name="statusName" type="xs:string"/>
+			<xs:element name="reportDate" type="xs:date"/>
+			<xs:element name="userName" type="xs:string"/>
+			<xs:element name="firstBatchLoadTime" type="xs:dateTime"/>
+			<xs:element name="lastBatchLoadTime" type="xs:dateTime"/>
+			<xs:element name="crossCheckStatusName" type="xs:string"/>
+			<xs:element name="productName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="ConfirmResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:responseInfo"/>
+				<xs:element name="confirmList" type="tns:ConfirmWs" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- ===== CrossCheckMessageWs ===== -->
+	<xs:complexType name="CrossCheckMessageWs">
+		<xs:sequence>
+			<xs:element name="innerValue" type="xs:string"/>
+			<xs:element name="outerValue" type="xs:string"/>
+			<xs:element name="diff" type="xs:string"/>
+			<xs:element name="description" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ===== CrossCheckWs ===== -->
+	<xs:complexType name="CrossCheckWs">
+		<xs:sequence>
+			<xs:element name="dateBegin" type="xs:dateTime"/>
+			<xs:element name="dateEnd" type="xs:dateTime"/>
+			<xs:element name="reportDate" type="xs:date"/>
+			<xs:element name="statusname" type="xs:string"/>
+			<xs:element name="username" type="xs:string"/>
+			<xs:element name="creditorname" type="xs:string"/>
+			<xs:element name="countQueue" type="xs:long"/>
+			<xs:element name="crossCheckMessageWsList" type="tns:CrossCheckMessageWs" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:element name="CrossCheckWsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:responseInfo"/>
+				<xs:element name="crossCheckWsList" type="tns:CrossCheckWs" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+</xs:schema>

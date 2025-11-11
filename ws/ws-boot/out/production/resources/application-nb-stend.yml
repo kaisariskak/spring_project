@@ -1,0 +1,46 @@
+server:
+  port: 50099
+  ssl:
+    enabled: true
+    key-store: classpath:eurekaclient.jks
+    key-store-password: eurekaclient
+    key-alias: eurekaclient
+    trust-store: classpath:eurekaclient.jks
+    trust-store-password: eurekaclient
+
+eureka:
+  client:
+    securePortEnabled: true
+    region: default
+    fetchRegistry: true
+    registryFetchIntervalSeconds: 5
+    enabled: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:https://localhost:58761/eureka}
+  instance:
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    preferIpAddress: true
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//10.8.1.163:1521/essp
+    username: eav_backend
+    password: 1
+
+batch:
+  wsDir: /opt/bsb/usci/ws-batches
+
+wso2:
+  provider:
+    clientId: d00eOIHpaYU7ggn9iP6SBzp6SLAa
+    clientSecret: NffXfypbZODc8KoNIrEnAqrko0Ma
+  token:
+    url: https://stendidp.nationalbank.kz/oauth2/token
+    introspectUrl: https://stendidp.nationalbank.kz/oauth2/introspect
+
+pki:
+  ocsp:
+    url: http://ocsp.pki.gov.kz
+    cer: pki_gost.cer

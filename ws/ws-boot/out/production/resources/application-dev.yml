@@ -1,0 +1,35 @@
+server:
+  port: 50099
+
+eureka:
+  client:
+    region: default
+    fetchRegistry: true
+    registryFetchIntervalSeconds: 5
+    enabled: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:58761/eureka}
+  instance:
+    preferIpAddress: true
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//172.17.110.122:1521/essp
+    username: system
+    password: manager
+
+batch:
+  wsDir: C:/bsb/usci/ws-batches
+
+wso2:
+  provider:
+    clientId: XvPOd9oahMQXDb1QdAGWMobcF7Ua
+    clientSecret: RXEcULlYdzH2Kd8sFm_CZiNhl6ga
+  token:
+    url: https://idp.bsbnb.rk:9443/oauth2/token
+    introspectUrl: https://idp.bsbnb.rk:9443/oauth2/introspect
+
+pki:
+  ocsp:
+    url: http://test.pki.gov.kz/ocsp/
+    cer: nca_gost_test.cer

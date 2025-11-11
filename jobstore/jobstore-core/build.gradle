@@ -1,0 +1,24 @@
+group = 'kz.bsbnb.usci.jobstore'
+version = '0.1.0'
+
+dependencies {
+    compile project(':model')
+    compile project(':jobstore:jobstore-api')
+    compile project(':util:util-api')
+    compile project(':wsclient:wsclient-api')
+
+    compile ("org.springframework.boot:spring-boot-starter-web")
+    compile ("org.springframework.boot:spring-boot-starter-jdbc")
+
+    compile("com.oracle:${ojdbcVersion}")
+}
+
+jar {
+    baseName = 'usci-jobstore-core'
+    version = '0.1.0'
+    enabled = true
+}
+
+bootJar {
+    enabled = false
+}

@@ -1,0 +1,81 @@
+group = 'kz.bsbnb.usci.ws'
+version = '0.1.0'
+
+
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+        exclude group: 'ch.qos.logback', module: 'logback-core'
+        exclude group: 'org.slf4j',     module: 'slf4j-log4j12'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+    }
+}
+
+dependencies {
+    compile project(':model')
+    compile project(':ws:ws-api')
+    compile project(':util:util-api')
+    compile project(':core:core-api')
+    compile project(':receiver:receiver-api')
+    compile project(':report:report-api')
+
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    compile('org.springframework.boot:spring-boot-starter-jdbc') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    //compile ("org.springframework.boot:spring-boot-starter-web")
+    //compile ("org.springframework.boot:spring-boot-starter-web-services")
+    //compile ("org.springframework.boot:spring-boot-starter-jdbc")
+
+    compile ("org.springdoc:springdoc-openapi-ui:1.6.14")
+
+    compile("org.apache.httpcomponents:httpclient:4.5.3")
+   // compile("org.apache.cxf:cxf-spring-boot-starter-jaxws:3.2.1")
+    compile("com.nimbusds:oauth2-oidc-sdk:8.23.1")
+    compile('org.apache.santuario:xmlsec158')
+    //compile("wsdl4j:wsdl4j:1.6.2")
+    //compile group: 'org.apache.axis', name: 'axis', version: '1.4'
+    //compile group: 'javax.xml', name: 'jaxrpc-api', version: '1.1'
+    //compile group: 'commons-discovery', name: 'commons-discovery', version: '0.5'
+
+    // XML
+    compile ("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+    compile ("com.fasterxml.woodstox:woodstox-core")
+    compile ("org.springframework.boot:spring-boot-starter-log4j2")
+    compile ("org.hibernate.validator:hibernate-validator")
+    compile ("javax.el:javax.el-api:3.0.0")
+
+    //compile('kz.gov.pki.kalkan:kalkancrypt_xmldsig-0.3')
+    //compile('kz.gov.pki.kalkan:kalkancrypt-0.4')
+    /*implementation('kz.gov.pki:kalkan:0.7.2')
+    implementation('kz.gov.pki:kalkancrypt-xmldsig-osgi:0.4')
+    implementation ('kz.gov.pki:knca-provider-util:0.8')
+    implementation('kz.gamma:crypto-gammaprov:2.0.4.0')*/
+
+    implementation files('libs/kalkancrypt-0.7.2.jar')
+    implementation files('libs/kalkancrypt_xmldsig-osgi-0.4.jar')
+    implementation files('libs/knca_provider_util-0.8.jar')
+    implementation files('libs/crypto.gammaprov.jar')
+
+    compile('org.apache.commons:commons-compress:1.16.1')
+    compile('kz.gamma:crypto-common10')
+    compile('kz.gamma:gammaprov11')
+    compile('org.apache.santuario:xmlsec158')
+    implementation 'xalan:xalan:2.7.2'
+
+    compile("com.oracle:${ojdbcVersion}")
+
+}
+
+jar {
+    baseName = 'usci-ws-core'
+    version = '0.1.0'
+    enabled = true
+}
+
+bootJar {
+    enabled = false
+}

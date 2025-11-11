@@ -1,0 +1,52 @@
+server:
+  port: 50003
+  ssl:
+    enabled: true
+    key-store: classpath:eureka.jks
+    key-store-password: *******
+    key-alias: eureka
+
+spring:
+  application:
+    name: core
+  datasource:
+    url: jdbc:oracle:thin:***********
+    username: ************
+    password: ************
+    hikari:
+      minimumIdle: 200
+      maximumPoolSize: 300
+      idleTimeout: 10000
+      maxLifetime: 180000000
+      connectionTimeout: 30000
+      pool-name: UsciHikariPool
+      leak-detection-threshold: 30000
+
+
+eureka:
+  client:
+    securePortEnabled: true
+    region: default
+    registryFetchIntervalSeconds: 5
+    enabled: true
+    serviceUrl:
+      defaultZone: https://10.8.1.58:58761/eureka
+    #shouldEnforceRegistrationNameLowercase: true
+
+  instance:
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    preferIpAddress: true
+    instanceId: ${spring.cloud.client.hostname}:${spring.application.name}:${server.port}
+    statusPageUrl: https://${eureka.instance.hostname}:${server.port}/actuator/info
+    healthCheckUrl: https://${eureka.instance.hostname}:${server.port}/actuator/health
+    homePageUrl: https://${eureka.instance.hostname}:${server.port}/
+    secureHealthCheckUrl: https://${spring.cloud.client.ip-address}:${server.port}/actuator/health
+    #nonSecurePortEnabled: false
+    #securePortEnabled: true
+    #securePort: ${server.port}
+    #preferIpAddress: true
+
+
+

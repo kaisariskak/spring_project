@@ -1,0 +1,92 @@
+server:
+  port: 50099
+  ssl:
+    enabled: true
+    key-store: classpath:eureka.jks
+    key-store-password: *************
+    key-alias: eureka
+  servlet:
+    context-path: /
+eureka:
+  client:
+    securePortEnabled: true
+    region: default
+    fetchRegistry: true
+    registryFetchIntervalSeconds: 5
+    enabled: true
+    serviceUrl:
+      defaultZone: https://10.8.1.58:58761/eureka
+  instance:
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    preferIpAddress: true
+    secureVirtualHostEnabled: true
+
+spring:
+  application:
+    name: ws
+  datasource:
+    url: jdbc:oracle:thin:************
+    username: **********
+    password: ************
+
+ribbon:
+  IsSecure: true
+  ReadTimeout: 10000
+  ConnectTimeout: 5000
+  eureka:
+    enabled: true
+
+core:
+  ribbon:
+    IsSecure: true
+    NIWSServerListClassName: com.netflix.niws.loadbalancer.DiscoveryEnabledNIWSServerList
+
+feign:
+  httpclient:
+    enabled: true
+    disableSslValidation: true
+  okhttp:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 60000
+        loggerLevel: FULL
+
+  logging:
+    level:
+      com.netflix: DEBUG
+
+batch:
+  wsDir: /opt/bsb/usci/ws-batches
+
+wso2:
+  provider:
+    clientId: ************
+    clientSecret: ******************
+  token:
+    url: https://stendidp.nationalbank.kz/oauth2/token
+    introspectUrl: https://stendidp.nationalbank.kz/oauth2/introspect
+
+pki:
+  ocsp:
+    url: http://ocsp.pki.gov.kz
+    cer: pki_gost.cer
+
+springdoc:
+  api-docs:
+    path: /ws/v3/api-docs
+  swagger-ui:
+    path: /ws/swagger-ui.html
+    url: /ws/v3/api-docs
+    config-url: /ws/v3/api-docs/swagger-config
+    oauth2-redirect-url: /ws/swagger-ui/oauth2-redirect.html
+    disable-swagger-default-url: true
+
+  # 👇 правильный server-url для Swagger UI
+  server:
+    url: https://depregtest.nationalbank.kz/
+    description: DEPREG Test Server

@@ -1,0 +1,43 @@
+server:
+  port: 50007
+  ssl:
+    enabled: true
+    key-store: classpath:eurekaclient.jks
+    key-store-password: ***********
+    key-alias: eurekaclient
+    trust-store: classpath:eurekaclient.jks
+    trust-store-password: *****************
+
+eureka:
+  client:
+    securePortEnabled: true
+    region: default
+    fetchRegistry: true
+    registryFetchIntervalSeconds: 5
+    enabled: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:https://localhost:58761/eureka}
+  instance:
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    preferIpAddress: true
+    instanceId: ${spring.cloud.client.ip-address}:${server.port}
+    hostname: ${spring.cloud.client.ip-address}
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:*************
+    username: ************
+    password:***************
+
+wsclient:
+  kgdUrl: 10.8.255.50:1276
+  gbdul:
+    url: http://10.8.255.50:3771/
+    username: ************
+    password: ***************
+  gbdfm:
+    url: http://10.8.255.50:5666/
+    username: ***********
+    password: ************

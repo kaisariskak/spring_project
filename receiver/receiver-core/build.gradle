@@ -1,0 +1,38 @@
+group = 'kz.bsbnb.usci.receiver'
+version = '0.1.0'
+
+dependencies {
+    compile project(':model')
+    compile project(':util:util-api')
+    compile project(':eav:eav-core')
+    compile project(':eav:eav-meta')
+    compile project(':core:core-api')
+    compile project(':sync:sync-api')
+    compile project(':mail:mail-api')
+
+    compile('org.springframework.boot:spring-boot-starter-batch')
+    compile('org.springframework.cloud:spring-cloud-starter-openfeign')
+    compile("org.springframework.kafka:spring-kafka:${springKafkaVersion}")
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-ribbon')
+
+    compile('org.apache.commons:commons-compress:1.16.1')
+    compile('kz.gamma:crypto-common10')
+    compile('kz.gamma:gammaprov11')
+    compile('org.apache.santuario:xmlsec158')
+   // compile('kz.gov.pki.kalkan:kalkancrypt_xmldsig-0.3')
+    //compile('kz.gov.pki.kalkan:kalkancrypt-0.4')
+    implementation files('libs/kalkancrypt-0.7.2.jar')
+    implementation files('libs/kalkancrypt_xmldsig-osgi-0.4.jar')
+    implementation files('libs/knca_provider_util-0.8.jar')
+    implementation files('libs/crypto.gammaprov.jar')
+}
+
+jar {
+    baseName = 'usci-receiver-core'
+    version = '0.1.0'
+    enabled = true
+}
+
+bootJar {
+    enabled = false
+}

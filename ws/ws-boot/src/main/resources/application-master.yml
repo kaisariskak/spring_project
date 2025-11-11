@@ -1,0 +1,49 @@
+server:
+  port: 50099
+  ssl:
+    enabled: true
+    key-store: classpath:eureka.jks
+    key-store-password: *************
+    key-alias: eureka
+
+eureka:
+  client:
+    securePortEnabled: true
+    region: default
+    fetchRegistry: true
+    registryFetchIntervalSeconds: 5
+    enabled: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:https://localhost:58761/eureka}
+  instance:
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    preferIpAddress: true
+    instanceId: ${spring.cloud.client.ip-address}:${server.port}
+    hostname: ${spring.cloud.client.ip-address}
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:***********
+    username: **********
+    password: ***********
+
+batch:
+  wsDir: /mnt/sdb1/bsb/usci/ws-batches
+
+wso2:
+  provider:
+    clientId: ********************
+    clientSecret: ******************
+  token:
+    url: https://idp.nationalbank.kz/oauth2/token
+    introspectUrl: https://idp.nationalbank.kz/oauth2/introspect
+pki:
+  ocsp:
+    url: http://ocsp.pki.gov.kz
+    cer: pki_gost.cer
+logging:
+  level:
+    root: all
+

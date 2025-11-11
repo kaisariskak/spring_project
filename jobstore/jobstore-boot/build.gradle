@@ -1,0 +1,20 @@
+group = 'kz.bsbnb.usci.jobstore'
+version = '0.1.0'
+
+dependencies {
+    compile project(':jobstore:jobstore-core')
+
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+    compile('org.springframework.cloud:spring-cloud-starter-openfeign')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('org.springframework.boot:spring-boot-starter-web')
+}
+
+bootJar {
+    baseName = 'usci-jobstore-boot'
+    version = '0.1.0'
+}
+
+springBoot {
+    mainClassName = 'kz.bsbnb.usci.jobstore.JobstoreApplication'
+}
